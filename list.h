@@ -1,20 +1,13 @@
 #ifndef LIST_H
 #define LIST_H
-
+#include "linked_list.h"
 // // TODO: List 클래스 정의 작성
-// class List : public LinkedList{
 
-// public:
-//   Node(int value) {
-//     value_ = value;
-//     next_ = nullptr;
-    
-//     friend class LinkedList;
-//   }
-
-// private:
-//   int value_;
-//   Node *next_;
-// };
+class List : public LinkedList{
+public:
+    void insert(int index, int value);
+    int get(int index); // index에 위치한 노드의 값을 반환한다
+    void remove(int index); // index에 위치한 노드를 제거하고 메모리 상에서 해제한다.
+};
 
 #endif

@@ -8,7 +8,6 @@ public:
   Node(int value) {
     value_ = value;
     next_ = nullptr;
-    
 
   }
 

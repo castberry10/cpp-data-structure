@@ -15,6 +15,7 @@ protected:
   void remove(int index);
   Node *head_;
   int size_;
+
 };
 
 #endif

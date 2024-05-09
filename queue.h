@@ -14,6 +14,8 @@ public:
     // Queue의 정의에 맞게 다음에 pop 될 값을 미리 본다.
     int peek(); 
 
+    void operator+=(int i);
+
 };
 
 #endif

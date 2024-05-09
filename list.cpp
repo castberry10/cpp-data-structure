@@ -7,7 +7,7 @@ void List::insert(int index, int value){
 }
 
 int List::get(int index){
-    LinkedList::get(index);
+    return LinkedList::get(index);
 }
 
 void List::remove(int index){

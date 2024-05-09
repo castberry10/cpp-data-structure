@@ -23,71 +23,65 @@ void LinkedList::print(){
     Node* cur = head_;
     while(cur != nullptr){
         std::cout << cur->value_ << " ";
+        cur = cur->next_;
     }
     std::cout << std::endl;
 }
 
 // index 위치에 노드를 삽입한다
 void LinkedList::insert(int index, int value){
-    Node ** cur = &head_;
+    if (index < 0 || index > size_) { // 여길 지나는 순간 범위는 SAFE
+        throw std::out_of_range("범위 체크");
+    }
+    
+    // 객체 생성
     Node* newNode = new Node(value);
-    int index_ = 0;
     
-    /*
-    인덱스 0
-    0을 근데 ? 
-    while 마지막에 일단 i ++ 두고 
-    index_ +1 했을때 조건이 맞다면
-    
-    [a] -> [b] -> [c] -> [d]
-    인데 c자리에 f를 넣을껀데
-    난 지금 b자리니까 
-        cur의 next next를 임시로 저장하고 
-        cur의 next next를 cur의 next로 바꾸고 ([c]의 next가 [c])
-        f의 next를 임시 저장한 노드를 넣는다. 
-        cur의 next를 f로 한다.
-    
-    */
-    if(index_ = 0){
+    // 처음에 넣기 
+    if (index == 0) { 
+        newNode->next_ = head_;
         head_ = newNode;
-        return;
-    }else if(index_ = 1){
-        head_->next_ = newNode;
-    }
-    while(1){
-        if(index_+1 == index){
-            Node* tempNode = (*cur)->next_->next_;
-            (*cur)->next_->next_ = (*cur)->next_;
-            newNode->next_ = tempNode;
-            (*cur)->next_ = newNode;
+    } else {  // 중간이나 마지막 
+        Node* cur = head_;
+        for (int i = 0; i < index - 1; ++i) {
+            cur = cur->next_;
         }
-        ++index_;
+        
+        newNode->next_ = cur->next_;
+        cur->next_ = newNode;
     }
+    ++size_; // 사이즈 추가
+    
 }
 
 // index에 위치한 노드의 값을 반환한다.
 int LinkedList::get(int index){
-    Node ** cur = &head_;
-    int index_ = 0;
-    while(*cur != nullptr){
-        if(index_ == index){
-            return (*cur)->value_;
-        }
-        *cur = (*cur)->next_; 
-        ++index_;
+    if (index < 0 || index >= size_) {
+        throw std::out_of_range("범위 체크");
     }
+    Node* cur = head_;
+    for (int i = 0; i < index; ++i) {
+        cur = cur->next_;
+    }
+    return cur->value_;
 }
 
  // index에 위치한 노드를 제거하고 메모리 상에서 해제한다.
 void LinkedList::remove(int index){
-    Node ** cur = &head_;
-    int index_ = 0;
-    if(index = 0){
-        delete *cur;
+    if (index < 0 || index >= size_) {
+        throw std::out_of_range("범위 체크");
     }
-    while(*cur != nullptr){
-        if(index_ + 1 == index)
-        *cur = (*cur)->next_; 
-        ++index_;
+    
+    Node** cur = &head_;
+    for (int i = 0; i < index; ++i) {
+        cur = &((*cur)->next_);
     }
+    --size_;
+
+    Node* tempNode = *cur;
+
+    *cur = (*cur)->next_;
+
+    delete tempNode;
+    
 }
